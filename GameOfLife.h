@@ -48,7 +48,8 @@ class GameOfLife : public QThread
     int  numberOfNeighbors ( bool **lattice,
                              int r, int c, bool s );
     void glider ( bool **lattice, int x, int y );
-
+    void mwss ( bool **lattice, int x, int y);
+    void Figureeight( bool **lattice, int x, int y);
     bool **predictions;
     void learning();
     
@@ -58,7 +59,7 @@ class GameOfLife : public QThread
     
     long m_time{0};
     
-    int m_delay{15};
+    int m_delay{60};
     
 public:
     GameOfLife ( int w = 30, int h = 20 );

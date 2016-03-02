@@ -1,5 +1,5 @@
-#ifndef SamuLife_H
-#define SamuLife_H
+#ifndef GameOfLife_H
+#define GameOfLife_H
 
 /**
  * @brief Samu has learnt the rules of Conway's Game of Life
@@ -31,30 +31,52 @@
  * an example of the paper entitled "Samu in his prenatal development".
  */
 
-#include <QKeyEvent>
-#include <QMainWindow>
-#include <QPainter>
-#include <QFont>
-#include "GameOfLife.h"
+#include <QThread>
+#include <QDebug> 
+#include <sstream> 
+#include "SamuQl.h"
 
-class SamuLife : public QMainWindow
+class GameOfLife : public QThread
 {
     Q_OBJECT
 
-    int m_cw {18}, m_ch {18};
-    GameOfLife *gameOfLife;
-    bool **lattice {nullptr};
-    bool **prediction {nullptr};
+    int m_w {40}, m_h {30};
 
-public slots :
-    void updateCells ( bool **, bool ** );
+    bool ***lattices;
+    int latticeIndex;
+    void development();
+    int  numberOfNeighbors ( bool **lattice,
+                             int r, int c, bool s );
+    void glider ( bool **lattice, int x, int y );
+    void mwss ( bool **lattice, int x, int y);
 
+    bool **predictions;
+    void learning();
+    
+    bool paused {false};
+    
+    QL** samuQl;
+    
+    long m_time{0};
+    
+    int m_delay{60};
+    
 public:
-    SamuLife ( int w = 30, int h = 20, QWidget *parent = 0 );
-    virtual ~SamuLife();
-    void paintEvent ( QPaintEvent* );
-    void keyPressEvent( QKeyEvent * event );
+    GameOfLife ( int w = 30, int h = 20 );
+    ~GameOfLife();
+
+    void run();
+    bool **lattice();
+    int getW() const;
+    int getH() const;
+    long getT() const;
+    void pause();
+    int getDelay() const {return m_delay;}
+    void setDelay(int delay) {if(delay > 0) m_delay = delay; else m_delay = 1;}
+
+signals:
+    void cellsChanged ( bool **, bool ** );
 
 };
 
-#endif // SamuLife_H
+#endif // GameOfLife_H

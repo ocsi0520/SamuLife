@@ -64,11 +64,9 @@ GameOfLife::GameOfLife ( int w, int h ) : m_w ( w ), m_h ( h )
         lattice[i][j] = false;
       }
 
-  glider ( lattice, 2*m_w/5, 2*m_h/5 );
-  glider ( lattice, 3*m_w/5, 3*m_h/5 );
-  glider ( lattice, 4*m_w/5, 4*m_h/5 );
-  glider ( lattice, 4*m_w/5, 2*m_h/5 );
-  glider ( lattice, 2*m_w/5, 4*m_h/5 );
+  //glider ( lattice, 2*m_w/5, 2*m_h/5 );
+  mwss(lattice, 20, 20);
+  Figureeight(lattice, 10, 10);
 
 }
 
@@ -204,6 +202,48 @@ void GameOfLife::glider ( bool **lattice, int x, int y )
   lattice[y+2][x+1] = true;
   lattice[y+2][x+2] = true;
   lattice[y+2][x+3] = true;
+
+}
+
+
+void GameOfLife::Figureeight ( bool **lattice, int x, int y )
+{
+
+  lattice[y+1][x+1] = true;
+  lattice[y+1][x+2] = true;
+  lattice[y+2][x+1] = true;
+  lattice[y+2][x+2] = true;
+
+  lattice[y+2][x+4] = true;
+  lattice[y+3][x+5] = true;
+
+  lattice[y+4][x+2] = true;
+  lattice[y+5][x+3] = true;
+
+  lattice[y+5][x+5] = true;
+  lattice[y+5][x+6] = true;
+  lattice[y+6][x+5] = true;
+  lattice[y+6][x+6] = true;
+
+}
+
+void GameOfLife::mwss(bool **lattice, int x, int y)
+{
+  lattice[y + 5][x + 1] = true;
+  lattice[y + 5][x + 2] = true;
+  lattice[y + 5][x + 3] = true;
+  lattice[y + 5][x + 4] = true;
+  lattice[y + 5][x + 5] = true;
+
+  lattice[y + 4][x + 1] = true;
+  lattice[y + 4][x + 6] = true;
+
+  lattice[y + 3][x + 1] = true;
+
+  lattice[y + 2][x + 2] = true;
+  lattice[y + 2][x + 6] = true; 
+
+  lattice[y + 1][x + 4] = true;
 
 }
 
